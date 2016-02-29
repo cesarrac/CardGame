@@ -19,47 +19,13 @@ public class EventZone : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        Card card = Deck_Manager.Instance.GetCard(eventData.pointerDrag.GetComponent<Card_Handler>().ID);
-
-        // Only allow one card to be place on here
-        //if (transform.childCount > 1)
-        //{
-        //    return;
-        //}
-
-
-        // Check if dragged card is of the type allowed by this drop zone (ONLY IF NOT SET TO ALL)
-        if (!canTakeAllTypes)
-        {
-            if (eventData.pointerDrag.GetComponent<Card_Handler>() != null)
-            {
-                // If not equal to drop zone type, return!
-                if (dropZoneTypes.Length > 0)
-                {
-                    for (int i = 0; i < dropZoneTypes.Length; i++)
-                    {
-                        if (card.CardType == dropZoneTypes[i])
-                            break;
-                    }
-
-                   // return;
-                }
-            }
-        }
-
-        // Check for Event Type
         if (eventData.pointerDrag.GetComponent<Card_Handler>() != null)
         {
-            for (int i = 0; i < card.WorldEventTypes.Length; i++)
-            {
-                if (card.WorldEventTypes[i] == eventType)
-                    break;
-            }
+            Card card = Deck_Manager.Instance.GetCard(eventData.pointerDrag.GetComponent<Card_Handler>().ID);
 
-            // if no type was equal to this one, return
-            //return;
+            if (CheckCardTypes(card) != true || CheckEventTypes(card) != true)
+                return;
         }
-
 
         // The object that is being dragged...
         if (eventData.pointerDrag.GetComponent<Draggable>() != null)
@@ -71,5 +37,36 @@ public class EventZone : MonoBehaviour, IDropHandler
         {
             eventData.pointerDrag.GetComponent<Card_Handler>().DropAction();
         }
+    }
+
+    bool CheckCardTypes(Card card)
+    {
+        // If not equal to drop zone type, return!
+        if (dropZoneTypes.Length > 0)
+        {
+            for (int i = 0; i < dropZoneTypes.Length; i++)
+            {
+                if (card.CardType == dropZoneTypes[i])
+                    return true;
+            }
+
+            
+        }
+
+        return false;
+    }
+
+    bool CheckEventTypes(Card card)
+    {
+
+        for (int i = 0; i < card.WorldEventTypes.Length; i++)
+        {
+            if (card.WorldEventTypes[i] == eventType)
+                return true;
+        }
+
+        // if no type was equal to this one, return
+        return false;
+      
     }
 }

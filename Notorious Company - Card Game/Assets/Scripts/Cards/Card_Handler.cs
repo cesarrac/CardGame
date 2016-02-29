@@ -50,6 +50,6 @@ public class Card_Handler : MonoBehaviour {
 
     public bool CheckCostAtDrop()
     {
-        return checkCost_func(-myCard.AgentCost);
+        return checkCost_func(myCard.AgentCost);
     }
 }

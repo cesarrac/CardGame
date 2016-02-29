@@ -25,8 +25,8 @@ public class Company_Manager  {
         gold = money;
     }
 
-    public void ChangeRoster(int change)
+    public void SubtractFromRoster(int change)
     {
-        agentRoster += change;
+        agentRoster -= change;
     }
 }

@@ -35,7 +35,7 @@ public class Company_Handler : MonoBehaviour {
         if (theCompany.AgentRoster >= cost)
         {
      
-            theCompany.ChangeRoster(cost);
+            theCompany.SubtractFromRoster(cost);
 
             Debug.Log("Company roster now equals " + theCompany.AgentRoster);
             return true;
